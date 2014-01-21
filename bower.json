@@ -1,9 +1,21 @@
 {
-  "name"          : "backbone",
-  "version"       : "1.1.0",
-  "main"          : "backbone.js",
-  "dependencies"  : {
-    "underscore"  : ">=1.5.0"
-  },
-  "ignore"        : ["backbone-min.js", "docs", "examples", "test", "*.yml", "*.map", ".html"]
+    "name": "modularjs-backbone",
+    "version": "0.0.1",
+    "main": "backbone.js",
+    "ignore": [
+        "docs",
+        "test",
+        "*.yml",
+        "*.map",
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "docs",
+        "test",
+        "Gruntfile.js",
+        "package.json"
+    ],
+    "dependencies": {
+        "modularjs-underscore": "0.0.2"
+    }
 }
