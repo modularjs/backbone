@@ -1,53 +1,84 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <title>Backbone Test Suite</title>
-  <link rel="stylesheet" href="vendor/qunit.css" type="text/css" media="screen" />
-  <script type="text/javascript" src="vendor/json2.js"></script>
-  <script type="text/javascript" src="vendor/qunit.js"></script>
-  <script type="text/javascript" src="vendor/require.js"></script>
-  <script>
-    // Tests are loaded async, so wait for them
-    // to load before starting.
-    QUnit.config.autostart = false;
+    <title>Backbone Test Suite</title>
+    <link rel="stylesheet" href="vendor/qunit.css" type="text/css" media="screen"/>
+    <script type="text/javascript" src="vendor/json2.js"></script>
+    <script type="text/javascript" src="vendor/qunit.js"></script>
+    <script type="text/javascript" src="vendor/require.js"></script>
+    <script>
+        // Tests are loaded async, so wait for them
+        // to load before starting.
+        QUnit.config.autostart = false;
 
-    require.config({
-      paths: {
-        'jquery': 'vendor/jquery',
-        'underscore': 'vendor/underscore',
-        'backbone': '../backbone'
-      },
-      shim: {
-        'underscore': {
-          exports: '_'
-        }
-      }
-    });
+        require.config({
+            paths: {
+                'es5': '../src/es5',
+                'underscore': '../src/underscore',
+                'backbone': '../src/backbone'
+            }
+        });
 
-    var root = this;
+        var root = this;
 
-    require(['backbone'], function(Backbone) {
-      require([
-        'environment',
-        'noconflict',
-        'events',
-        'model',
-        'collection',
-        'router',
-        'view',
-        'sync'
-      ], function() {
-        QUnit.start();
-      });
-    });
-  </script>
+        require([
+            'backbone/Model',
+            'backbone/Events/on',
+            'backbone/Events/off',
+            'backbone/Events/trigger',
+            'backbone/Events/listenTo',
+            'backbone/Events/listenToOnce',
+            'backbone/Events/once',
+            'backbone/Events/stopListening',
+            'underscore/collections/size',
+            'underscore/functions/debounce',
+            'underscore/objects/extend',
+            'underscore/objects/keys'
+        ], function (Model, on, off, trigger, listenTo, listenToOnce, once, stopListening, size, debounce, extend,
+                     keys) {
+
+            window.Backbone = {
+                Model: Model,
+                Events: {
+                    on: on,
+                    off: off,
+                    trigger: trigger,
+                    listenTo: listenTo,
+                    listenToOnce: listenToOnce,
+                    once: once,
+                    stopListening: stopListening
+                }
+            };
+
+            window._ = {
+                size: size,
+                debounce: debounce,
+                extend: extend,
+                keys: keys
+            };
+
+            _.extend(window.Backbone, window.Backbone.Events);
+
+            require([
+                'environment',
+                'events',
+//                'model',
+//                'collection',
+//                'router',
+//                'view',
+//                'sync'
+            ], function () {
+                QUnit.start();
+            });
+        });
+    </script>
 </head>
 <body>
-  <div id="qunit"></div>
-  <div id="qunit-fixture">
+<div id="qunit"></div>
+<div id="qunit-fixture">
     <div id='testElement'>
-      <h1>Test</h1>
+        <h1>Test</h1>
     </div>
-  </div>
+</div>
 </body>
 </html>
