@@ -1,7 +1,4 @@
-/**
- *
- */
-define(['ajax/ajax'], function ($ajax) {
+define(['backbone/native/ajax'], function ($ajax) {
     "use strict";
 
     return function () {

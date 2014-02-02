@@ -27,9 +27,7 @@ define([
         options || (options = {});
 
         // Run validation.
-        if (!this._validate(attrs, options)) {
-            return false;
-        }
+        if (!this._validate(attrs, options)) return false;
 
         // Extract attributes and options.
         unset           = options.unset;
@@ -66,7 +64,7 @@ define([
         // Trigger all relevant attribute changes.
         if (!silent) {
             if (changes.length) {
-                this._pending = true;
+                this._pending = options;
             }
             for (var i = 0, l = changes.length; i < l; i++) {
                 this.trigger('change:' + changes[i], this, current[changes[i]], options);
@@ -80,6 +78,7 @@ define([
         }
         if (!silent) {
             while (this._pending) {
+                options = this._pending;
                 this._pending = false;
                 this.trigger('change', this, options);
             }

@@ -20,55 +20,94 @@
         });
 
         var root = this;
+        var env;
 
-        require([
-            'backbone/Model',
-            'backbone/Events/on',
-            'backbone/Events/off',
-            'backbone/Events/trigger',
-            'backbone/Events/listenTo',
-            'backbone/Events/listenToOnce',
-            'backbone/Events/once',
-            'backbone/Events/stopListening',
-            'underscore/collections/size',
-            'underscore/functions/debounce',
-            'underscore/objects/extend',
-            'underscore/objects/keys'
-        ], function (Model, on, off, trigger, listenTo, listenToOnce, once, stopListening, size, debounce, extend,
-                     keys) {
+        QUnit.testStart(function () {
+            env = this.config.current.testEnvironment;
+        });
 
-            window.Backbone = {
-                Model: Model,
-                Events: {
-                    on: on,
-                    off: off,
-                    trigger: trigger,
-                    listenTo: listenTo,
-                    listenToOnce: listenToOnce,
-                    once: once,
-                    stopListening: stopListening
-                }
+        // setup ajax mock:
+        define("backbone/ajax", [], function () {
+            return function (settings) {
+                env.ajaxSettings = settings;
             };
+        });
 
-            window._ = {
-                size: size,
-                debounce: debounce,
-                extend: extend,
-                keys: keys
-            };
+        require(["backbone/sync"], function (realSync) {
 
-            _.extend(window.Backbone, window.Backbone.Events);
+            requirejs.undef("backbone/sync");
+            requirejs.undef("backbone/ajax");
 
+            // setup sync mock:
+            define("backbone/sync", [], function () {
+                console.log("sync2");
+
+                return function (method, model, options) {
+                    console.log("sync");
+                    env.syncArgs = {
+                        method: method,
+                        model: model,
+                        options: options
+                    };
+                    realSync.apply(this, arguments);
+                };
+            });
+
+            // require modules, needed for test
             require([
-                'environment',
-                'events',
-//                'model',
+                'backbone/PersistableModel',
+                'backbone/Collection',
+                'backbone/Events/on',
+                'backbone/Events/off',
+                'backbone/Events/trigger',
+                'backbone/Events/listenTo',
+                'backbone/Events/listenToOnce',
+                'backbone/Events/once',
+                'backbone/Events/stopListening',
+                'underscore/collections/size',
+                'underscore/functions/debounce',
+                'underscore/objects/clone',
+                'underscore/objects/extend',
+                'underscore/objects/isEqual',
+                'underscore/objects/keys'
+            ], function (Model, Collection, on, off, trigger, listenTo, listenToOnce, once, stopListening, size,
+                         debounce, clone, extend, isEqual, keys) {
+
+                window.Backbone = {
+                    Model: Model,
+                    Collection: Collection,
+                    Events: {
+                        on: on,
+                        off: off,
+                        trigger: trigger,
+                        listenTo: listenTo,
+                        listenToOnce: listenToOnce,
+                        once: once,
+                        stopListening: stopListening
+                    }
+                };
+
+                window._ = {
+                    clone: clone,
+                    size: size,
+                    debounce: debounce,
+                    extend: extend,
+                    isEqual: isEqual,
+                    keys: keys
+                };
+
+                _.extend(window.Backbone, window.Backbone.Events);
+
+                require([
+                    'events',
+                    'model',
 //                'collection',
 //                'router',
 //                'view',
 //                'sync'
-            ], function () {
-                QUnit.start();
+                ], function () {
+                    QUnit.start();
+                });
             });
         });
     </script>

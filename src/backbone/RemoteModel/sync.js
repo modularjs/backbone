@@ -1,7 +1,7 @@
 define([
     'backbone/util/getValue',
     'backbone/util/urlError',
-    'zepto/ajax/ajax',
+    'ajax/ajax',
     'underscore/objects/extend'
 ], function (getValue, urlError, ajax, extend) {
     "use strict";
