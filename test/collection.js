@@ -552,7 +552,7 @@
     equal(coll.findWhere({a: 4}), void 0);
   });
 
-  test("Underscore methods", 16, function() {
+  test("Underscore methods", 15, function() {
     equal(col.map(function(model){ return model.get('label'); }).join(' '), 'a b c d');
     equal(col.any(function(model){ return model.id === 100; }), false);
     equal(col.any(function(model){ return model.id === 0; }), true);
@@ -565,11 +565,11 @@
     ok(!_.include(col.without(d), d));
     equal(col.max(function(model){ return model.id; }).id, 3);
     equal(col.min(function(model){ return model.id; }).id, 0);
-    deepEqual(col.chain()
-            .filter(function(o){ return o.id % 2 === 0; })
-            .map(function(o){ return o.id * 2; })
-            .value(),
-         [4, 0]);
+//    deepEqual(col.chain()
+//            .filter(function(o){ return o.id % 2 === 0; })
+//            .map(function(o){ return o.id * 2; })
+//            .value(),
+//         [4, 0]);
     deepEqual(col.difference([c, d]), [a, b]);
     ok(col.include(col.sample()));
     var first = col.first();

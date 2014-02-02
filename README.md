@@ -1,3 +1,10 @@
+Differs from original Backbone:
+- collections do not support chaining
+
+Notes on automated tests:
+- some of tests that rely on global ajaxSettings present fail, because start of every test will change QUnit's current environment.
+These tests must not fail when they are run apart from other tests.
+
      ____                     __      __
     /\  _`\                  /\ \    /\ \                                   __
     \ \ \ \ \     __      ___\ \ \/'\\ \ \____    ___     ___      __      /\_\    ____

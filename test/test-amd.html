@@ -20,10 +20,16 @@
         });
 
         var root = this;
-        var env;
+        var env = null;
 
         QUnit.testStart(function () {
-            env = this.config.current.testEnvironment;
+            if (env === null) {
+                env = this.config.current.testEnvironment;
+            }
+        });
+
+        QUnit.testDone(function () {
+            env = null;
         });
 
         // setup ajax mock:
@@ -40,10 +46,7 @@
 
             // setup sync mock:
             define("backbone/sync", [], function () {
-                console.log("sync2");
-
                 return function (method, model, options) {
-                    console.log("sync");
                     env.syncArgs = {
                         method: method,
                         model: model,
@@ -56,7 +59,7 @@
             // require modules, needed for test
             require([
                 'backbone/PersistableModel',
-                'backbone/Collection',
+                'backbone/PersistableCollection',
                 'backbone/Events/on',
                 'backbone/Events/off',
                 'backbone/Events/trigger',
@@ -64,14 +67,20 @@
                 'backbone/Events/listenToOnce',
                 'backbone/Events/once',
                 'backbone/Events/stopListening',
+                'underscore/collections/contains',
+                'underscore/collections/filter',
+                'underscore/collections/map',
+                'underscore/collections/pluck',
                 'underscore/collections/size',
                 'underscore/functions/debounce',
+                'underscore/functions/defer',
                 'underscore/objects/clone',
                 'underscore/objects/extend',
                 'underscore/objects/isEqual',
-                'underscore/objects/keys'
-            ], function (Model, Collection, on, off, trigger, listenTo, listenToOnce, once, stopListening, size,
-                         debounce, clone, extend, isEqual, keys) {
+                'underscore/objects/keys',
+                'underscore/objects/omit'
+            ], function (Model, Collection, on, off, trigger, listenTo, listenToOnce, once, stopListening, contains,
+                         filter, map, pluck, size, debounce, defer, clone, extend, isEqual, keys, omit) {
 
                 window.Backbone = {
                     Model: Model,
@@ -89,11 +98,18 @@
 
                 window._ = {
                     clone: clone,
+                    contains: contains,
+                    include: contains,
+                    map: map,
+                    pluck: pluck,
                     size: size,
                     debounce: debounce,
+                    defer: defer,
                     extend: extend,
+                    filter: filter,
                     isEqual: isEqual,
-                    keys: keys
+                    keys: keys,
+                    omit: omit
                 };
 
                 _.extend(window.Backbone, window.Backbone.Events);
@@ -101,7 +117,7 @@
                 require([
                     'events',
                     'model',
-//                'collection',
+                    'collection',
 //                'router',
 //                'view',
 //                'sync'

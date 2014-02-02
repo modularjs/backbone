@@ -93,7 +93,7 @@ define([
             if (obj == null) {
                 return void 0;
             }
-            return this._byId[obj.id] || this._byId[obj.cid] || this._byId[obj];
+            return this._byId[obj] || this._byId[obj.id] || this._byId[obj.cid];
         },
 
         // Pluck an attribute from each model in the collection.
