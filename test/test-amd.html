@@ -60,6 +60,7 @@
             require([
                 'backbone/PersistableModel',
                 'backbone/PersistableCollection',
+                'backbone/View',
                 'backbone/Events/on',
                 'backbone/Events/off',
                 'backbone/Events/trigger',
@@ -79,12 +80,13 @@
                 'underscore/objects/isEqual',
                 'underscore/objects/keys',
                 'underscore/objects/omit'
-            ], function (Model, Collection, on, off, trigger, listenTo, listenToOnce, once, stopListening, contains,
+            ], function (Model, Collection, View, on, off, trigger, listenTo, listenToOnce, once, stopListening, contains,
                          filter, map, pluck, size, debounce, defer, clone, extend, isEqual, keys, omit) {
 
                 window.Backbone = {
                     Model: Model,
                     Collection: Collection,
+                    View: View,
                     Events: {
                         on: on,
                         off: off,
@@ -115,11 +117,11 @@
                 _.extend(window.Backbone, window.Backbone.Events);
 
                 require([
-                    'events',
-                    'model',
-                    'collection',
-//                'router',
-//                'view',
+//                    'events',
+//                    'model',
+//                    'collection',
+//                    'router',
+                    'view',
 //                'sync'
                 ], function () {
                     QUnit.start();

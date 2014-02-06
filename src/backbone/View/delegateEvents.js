@@ -4,9 +4,8 @@
 define([
     'underscore/utility/result',
     'underscore/objects/isFunction',
-    'underscore/functions/bind',
-    'jqlite/events/delegateEvents'
-], function (result, isFunction, bind, delegateEvents) {
+    'underscore/functions/bind'
+], function (result, isFunction, bind) {
     "use strict";
 
     // Cached regex to split keys for `delegate`.

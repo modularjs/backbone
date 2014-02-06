@@ -1,7 +1,7 @@
 /**
  *
  */
-define(['backbone/dollar'], function ($) {
+define(['backbone/View/native/$wrapEl'], function ($wrapEl) {
     "use strict";
 
     // Change the view's element (`this.el` property), including event
@@ -10,7 +10,7 @@ define(['backbone/dollar'], function ($) {
         if (this.$el) {
             this.undelegateEvents();
         }
-        this.$el = element instanceof $ ? element : $(element);
+        this.$el = $wrapEl.isInstance(element) ? element : $wrapEl(element);
         this.el = this.$el[0];
         if (delegate !== false) {
             this.delegateEvents();

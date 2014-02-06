@@ -15,6 +15,7 @@
   });
 
   test("constructor", 3, function() {
+      console.log("el", view.el, view.el.id);
     equal(view.el.id, 'test-view');
     equal(view.el.className, 'test-view');
     equal(view.el.other, void 0);

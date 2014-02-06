@@ -8,13 +8,12 @@ define([
     'underscore/utility/result',
     'underscore/objects/extend',
     'underscore/objects/pick',
-    'dom/document/createElement',
-    'jqlite/attributes/attrs',
+    'backbone/View/native/createElement',
     // view methods:
     'backbone/View/setElement',
     'backbone/View/delegateEvents',
     'backbone/View/undelegateEvents'
-], function (Events, backboneExtend, uniqueId, result, extend, pick, createElement, $attrs, setElement, delegateEvents, undelegateEvents) {
+], function (Events, backboneExtend, uniqueId, result, extend, pick, createElement, /*$attrs,*/ setElement, delegateEvents, undelegateEvents) {
     "use strict";
 
     // Backbone Views are almost more convention than they are actual code. A View
@@ -78,8 +77,7 @@ define([
                 if (this.className) {
                     attributes['class'] = result(this, 'className');
                 }
-                var $el = createElement(result(this, 'tagName'));
-                $attrs($el, attributes);
+                var $el = createElement(result(this, 'tagName')).attr(attributes);
                 this.setElement($el, false);
             } else {
                 this.setElement(result(this, 'el'), false);
