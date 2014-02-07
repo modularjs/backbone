@@ -15,7 +15,6 @@
   });
 
   test("constructor", 3, function() {
-      console.log("el", view.el, view.el.id);
     equal(view.el.id, 'test-view');
     equal(view.el.className, 'test-view');
     equal(view.el.other, void 0);
@@ -181,7 +180,7 @@
     var $el = $('<p></p>');
 
     var View = Backbone.View.extend({
-      el: $el,
+      el: $el.get(0),
       events: {
         click: function() {
           count++;
@@ -206,7 +205,7 @@
     var count = 0;
 
     var View = Backbone.View.extend({
-      el: $('body'),
+      el: $('body').get(0),
       events: function() {
         return {"fake$event.namespaced": "run"};
       },
@@ -216,7 +215,7 @@
     });
 
     var view = new View;
-    $('body').trigger('fake$event').trigger('fake$event');
+    view.$el.trigger('fake$event').trigger('fake$event');
     equal(count, 2);
 
     $('body').off('.namespaced');
@@ -225,13 +224,13 @@
   });
 
   test("#1048 - setElement uses provided object.", 2, function() {
-    var $el = $('body');
+    var $el = $('body').get(0);
 
     var view = new Backbone.View({el: $el});
-    ok(view.$el === $el);
+    ok(view.$el.get(0) === $el);
 
-    view.setElement($el = $($el));
-    ok(view.$el === $el);
+    view.setElement($el);
+    ok(view.$el.get(0) === $el);
   });
 
   test("#986 - Undelegate before changing element.", 1, function() {
@@ -246,8 +245,8 @@
       }
     });
 
-    var view = new View({el: button1});
-    view.setElement(button2);
+    var view = new View({el: button1.get(0)});
+    view.setElement(button2.get(0));
 
     button1.trigger('click');
     button2.trigger('click');
@@ -272,7 +271,11 @@
       }
     });
 
-    ok(new View().$el.is('p'));
+      var view = new View();
+      // this is needed for .is() method to work:
+      document.body.appendChild(view.el);
+
+      ok(view.$el.is('p'));
   });
 
   test("views stopListening", 0, function() {
@@ -301,6 +304,10 @@
     });
 
     var view = new View;
+
+    // this is needed for .is() method to work:
+    document.body.appendChild(view.el);
+
     ok(view.$el.is('p'));
     ok(view.$el.has('a'));
   });

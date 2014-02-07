@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="vendor/qunit.css" type="text/css" media="screen"/>
     <script type="text/javascript" src="vendor/json2.js"></script>
     <script type="text/javascript" src="vendor/qunit.js"></script>
+    <script type="text/javascript" src="vendor/jquery.js"></script> <!-- needed only for some View tests -->
     <script type="text/javascript" src="vendor/require.js"></script>
     <script>
         // Tests are loaded async, so wait for them
@@ -117,11 +118,11 @@
                 _.extend(window.Backbone, window.Backbone.Events);
 
                 require([
-//                    'events',
-//                    'model',
-//                    'collection',
-//                    'router',
+                    'events',
+                    'model',
+                    'collection',
                     'view',
+//                    'router',
 //                'sync'
                 ], function () {
                     QUnit.start();

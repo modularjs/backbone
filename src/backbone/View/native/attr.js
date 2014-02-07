@@ -12,7 +12,6 @@ define([
      */
     return function (attrs) {
         each(keys(attrs), function(attr){
-            console.log("attr", attr, attrs[attr]);
             switch (attr){
             case 'html':
                 this[0].innerHTML = attrs[attr];

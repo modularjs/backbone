@@ -77,7 +77,7 @@ define([
                 if (this.className) {
                     attributes['class'] = result(this, 'className');
                 }
-                var $el = createElement(result(this, 'tagName')).attr(attributes);
+                var $el = createElement('<' + result(this, 'tagName') + '/>').attr(attributes);
                 this.setElement($el, false);
             } else {
                 this.setElement(result(this, 'el'), false);
