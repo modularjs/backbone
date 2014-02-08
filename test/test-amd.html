@@ -82,12 +82,13 @@
                 'underscore/functions/defer',
                 'underscore/objects/clone',
                 'underscore/objects/extend',
+                'underscore/objects/isEmpty',
                 'underscore/objects/isEqual',
                 'underscore/objects/keys',
                 'underscore/objects/omit',
                 'underscore/objects/pick'
             ], function (Model, Collection, View, Router, History, on, off, trigger, listenTo, listenToOnce, once, stopListening, contains,
-                         each, filter, map, pluck, size, bindAll, debounce, defer, clone, extend, isEqual, keys, omit, pick) {
+                         each, filter, map, pluck, size, bindAll, debounce, defer, clone, extend, isEmpty, isEqual, keys, omit, pick) {
 
                 window.Backbone = {
                     Model: Model,
@@ -119,6 +120,7 @@
                     extend: extend,
                     each: each,
                     filter: filter,
+                    isEmpty: isEmpty,
                     isEqual: isEqual,
                     keys: keys,
                     omit: omit,
@@ -128,12 +130,12 @@
                 _.extend(window.Backbone, window.Backbone.Events);
 
                 require([
-//                    'events',
-//                    'model',
-//                    'collection',
-//                    'view',
-                    'router',
-//                'sync'
+                    'events',
+                    'model',
+                    'collection',
+                    'view',
+                    'router'
+//                    'sync'
                 ], function () {
                     QUnit.start();
                 });
