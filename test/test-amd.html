@@ -62,6 +62,8 @@
                 'backbone/PersistableModel',
                 'backbone/PersistableCollection',
                 'backbone/View',
+                'backbone/Router',
+                'backbone/History',
                 'backbone/Events/on',
                 'backbone/Events/off',
                 'backbone/Events/trigger',
@@ -70,24 +72,29 @@
                 'backbone/Events/once',
                 'backbone/Events/stopListening',
                 'underscore/collections/contains',
+                'underscore/collections/each',
                 'underscore/collections/filter',
                 'underscore/collections/map',
                 'underscore/collections/pluck',
                 'underscore/collections/size',
+                'underscore/functions/bindAll',
                 'underscore/functions/debounce',
                 'underscore/functions/defer',
                 'underscore/objects/clone',
                 'underscore/objects/extend',
                 'underscore/objects/isEqual',
                 'underscore/objects/keys',
-                'underscore/objects/omit'
-            ], function (Model, Collection, View, on, off, trigger, listenTo, listenToOnce, once, stopListening, contains,
-                         filter, map, pluck, size, debounce, defer, clone, extend, isEqual, keys, omit) {
+                'underscore/objects/omit',
+                'underscore/objects/pick'
+            ], function (Model, Collection, View, Router, History, on, off, trigger, listenTo, listenToOnce, once, stopListening, contains,
+                         each, filter, map, pluck, size, bindAll, debounce, defer, clone, extend, isEqual, keys, omit, pick) {
 
                 window.Backbone = {
                     Model: Model,
                     Collection: Collection,
                     View: View,
+                    Router: Router,
+                    History: History,
                     Events: {
                         on: on,
                         off: off,
@@ -106,23 +113,26 @@
                     map: map,
                     pluck: pluck,
                     size: size,
+                    bindAll: bindAll,
                     debounce: debounce,
                     defer: defer,
                     extend: extend,
+                    each: each,
                     filter: filter,
                     isEqual: isEqual,
                     keys: keys,
-                    omit: omit
+                    omit: omit,
+                    pick: pick
                 };
 
                 _.extend(window.Backbone, window.Backbone.Events);
 
                 require([
-                    'events',
-                    'model',
-                    'collection',
-                    'view',
-//                    'router',
+//                    'events',
+//                    'model',
+//                    'collection',
+//                    'view',
+                    'router',
 //                'sync'
                 ], function () {
                     QUnit.start();
