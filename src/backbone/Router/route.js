@@ -32,7 +32,7 @@ define([
             router.execute(callback, args);
             router.trigger.apply(router, ['route:' + name].concat(args));
             router.trigger('route', name, args);
-            (window.Backbone.history || globalHistory).trigger('route', router, name, args);
+            history.trigger('route', router, name, args);
         });
         return this;
     }
