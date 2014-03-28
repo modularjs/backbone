@@ -23,7 +23,11 @@ define([
             callback = this[name];
         }
         var router = this;
-        (window.Backbone.history || globalHistory).route(route, function(fragment) {
+        var history = globalHistory;
+        if (window.Backbone && window.Backbone.history) {
+            history = window.Backbone.history;
+        }
+        history.route(route, function(fragment) {
             var args = router._extractParameters(route, fragment);
             router.execute(callback, args);
             router.trigger.apply(router, ['route:' + name].concat(args));
